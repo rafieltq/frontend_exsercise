@@ -2,29 +2,43 @@
   <div class="about flex">
     <h1 class="text-center">Login</h1>
     <v-row class="justify-center">
-      <v-col sm="4"><v-text-field color="info" label="E-mail" required :rules="rules.name" v-model="user.email"></v-text-field></v-col>
+      <v-col sm="4"><v-text-field color="info" label="E-mail" :rules="rules.name" v-model="user.email"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
-      <v-col sm="4"><v-text-field color="info" label="password" type="password" required :rules="rules.pass" v-model="user.password"></v-text-field></v-col>
+      <v-col sm="4"><v-text-field color="info" label="password" type="password" :rules="rules.pass" v-model="user.password"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
       <v-col sm="4" class="text-center"><v-btn color="info" @click="loginUser()">Login</v-btn></v-col>
     </v-row>
-    <v-snackbar :timeout="tiemout" top right color="success" v-model="snackbar">
-      Acción realizada correctamente
-      <v-btn text @click="snackbar = false">
-        <v-icon>mdi-check</v-icon>
-      </v-btn>
+    <v-snackbar
+    color="red"
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{snackMessage}}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="danger"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
     </v-snackbar>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import httpClient from '../api/HttpClient.js'
 
 export default {
   data () {
     return {
+      snackbar: false,
+      timeout: 2000,
+      snackMessage: '',
       options: {
         headers: { 'Content-Type': 'application/json' }
       },
@@ -40,9 +54,10 @@ export default {
   },
   methods: {
     loginUser () {
-      axios
+      httpClient
         .post('https://apidev.kanvas.dev/v1/auth', this.user, this.options)
         .then(response => {
+          this.snackbar = true
           this.user.email = ''
           this.user.password = ''
           window.localStorage.setItem('token', response.data.token)
@@ -51,21 +66,18 @@ export default {
           this.$store.commit('switchLogged', true)
         })
         .catch(error => {
-          console.log(error)
+          console.log(error.response.status)
+          if (error.response.status === 404) {
+            this.snackbar = true
+            this.snackMessage = 'Este usuario no existe'
+          } else if (error.response.status === 422) {
+            this.snackMessage = 'El correo electronico o la contraseña son incorrectos'
+            this.snackbar = true
+          }
         })
     },
     goto (route) {
       this.$router.push(route)
-    },
-    getUsers () {
-      this.authAxios
-        .get('https://apidev.kanvas.dev/v1/users')
-        .then(response => {
-          this.users = response.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   }
 }
