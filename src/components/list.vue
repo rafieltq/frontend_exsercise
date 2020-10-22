@@ -49,7 +49,6 @@ import axios from 'axios'
 export default {
   mounted () {
     this.getUsers()
-    console.log('bien')
   },
   data () {
     return {
