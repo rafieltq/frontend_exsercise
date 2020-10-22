@@ -12,7 +12,7 @@
         />
         <h1><span class="info--text">MCTEKK</span></h1>
       </div>
-      <v-btn class="ml-5" text @click="goto('admin')" color="black">Administrar usuarios</v-btn>
+      <v-btn class="ml-5" text @click="goto('admin')" color="black">Listado de usuarios</v-btn>
       <v-spacer></v-spacer>
       <div v-if="!isLogged">
         <v-btn @click="goto('login')" dark color="info" outlined>
@@ -38,8 +38,6 @@ export default {
   },
   computed: {
     isLogged () {
-      // eslint-disable-next-line dot-notation
-      console.log(this.$store.getters['getIsLogged'])
       // eslint-disable-next-line dot-notation
       return this.$store.getters['getIsLogged']
     }
