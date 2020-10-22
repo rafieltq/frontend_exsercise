@@ -5,7 +5,7 @@
       <v-col sm="4"><v-text-field color="info" label="E-mail" required :rules="rules.name" v-model="user.email"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
-      <v-col sm="4"><v-text-field color="info" label="password" required :rules="rules.pass" v-model="user.password"></v-text-field></v-col>
+      <v-col sm="4"><v-text-field color="info" label="password" type="password" required :rules="rules.pass" v-model="user.password"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
       <v-col sm="4" class="text-center"><v-btn color="info" @click="loginUser()">Login</v-btn></v-col>
@@ -42,7 +42,7 @@ export default {
           window.localStorage.setItem('token', response.data.token)
           window.localStorage.setItem('user', JSON.stringify(response.data))
           this.goto('admin')
-          console.log('logueado')
+          this.$store.commit('switchLogged', true)
         })
         .catch(error => {
           console.log(error)

@@ -8,8 +8,9 @@ export default new Vuex.Store({
     isLogged: false
   },
   mutations: {
-    switchLogged (state) {
-      state.isLogged = !state.isLogged
+    switchLogged (state, value) {
+      console.log(typeof value)
+      state.isLogged = value
     }
   },
   getters: {

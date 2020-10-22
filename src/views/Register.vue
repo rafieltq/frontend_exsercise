@@ -11,10 +11,10 @@
       <v-col sm="4"><v-text-field color="info" label="e-mail" v-model="user.email"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
-      <v-col sm="4"><v-text-field color="info" label="Password" v-model="user.password"></v-text-field></v-col>
+      <v-col sm="4"><v-text-field color="info" label="Password" type="password" v-model="user.password"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
-      <v-col sm="4"><v-text-field color="info" label="Confirm password" v-model="user.verify_password"></v-text-field></v-col>
+      <v-col sm="4"><v-text-field color="info" label="Confirm password" type="password" v-model="user.verify_password"></v-text-field></v-col>
     </v-row>
     <v-row class="justify-center">
       <v-col sm="4"><v-text-field color="info" label="Default Company" v-model="user.default_company"></v-text-field></v-col>

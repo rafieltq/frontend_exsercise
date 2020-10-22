@@ -22,6 +22,11 @@ export default {
       this.$router.push(route)
     }
   },
+  computed: {
+    getIsLogged () {
+      return this.$store.getIsLogged
+    }
+  },
   components: { mynav },
   data: () => ({
     //

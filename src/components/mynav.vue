@@ -14,12 +14,17 @@
       </div>
       <v-btn class="ml-5" text @click="goto('admin')" color="black">Administrar usuarios</v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="goto('login')" dark color="info" outlined>
+      <div v-if="!isLogged">
+        <v-btn @click="goto('login')" dark color="info" outlined>
         <span class="mr-2">Login</span>
-      </v-btn>
-      <v-btn @click="goto('register')" dark color="info" class="ml-1">
+        </v-btn>
+        <v-btn @click="goto('register')" dark color="info" class="ml-1">
         <span class="mr-2">Register</span>
-      </v-btn>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn color="red" @click="logout()">Logout</v-btn>
+      </div>
     </v-app-bar>
     </div>
 </template>
@@ -32,10 +37,22 @@ export default {
     }
   },
   computed: {
+    isLogged () {
+      // eslint-disable-next-line dot-notation
+      console.log(this.$store.getters['getIsLogged'])
+      // eslint-disable-next-line dot-notation
+      return this.$store.getters['getIsLogged']
+    }
   },
   methods: {
     goto (route) {
       this.$router.push(route)
+    },
+    logout () {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      this.$store.commit('switchLogged', false)
+      this.goto('login')
     }
   }
 }
