@@ -10,6 +10,12 @@
     <v-row class="justify-center">
       <v-col sm="4" class="text-center"><v-btn color="info" @click="loginUser()">Login</v-btn></v-col>
     </v-row>
+    <v-snackbar :timeout="tiemout" top right color="success" v-model="snackbar">
+      Acción realizada correctamente
+      <v-btn text @click="snackbar = false">
+        <v-icon>mdi-check</v-icon>
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
