@@ -11,7 +11,6 @@ export default {
   mounted () {
     // eslint-disable-next-line eqeqeq
     if (this.isLogged == false) {
-      console.log('ruede')
       this.goto('login')
     }
   },
