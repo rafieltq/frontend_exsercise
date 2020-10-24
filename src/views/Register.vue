@@ -96,6 +96,10 @@ export default {
             this.snackMessage = error.response.data.errors.message
             this.snackbarColor = 'red'
             this.snackbar = true
+          } else if (error.response.status === 404) {
+            this.snackMessage = error.response.data.errors.message
+            this.snackbarColor = 'red'
+            this.snackbar = true
           }
         })
     }
